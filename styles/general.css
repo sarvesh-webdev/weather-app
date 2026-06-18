@@ -1,0 +1,15 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  min-height: 100vh; /* ensures it covers full screen */
+  background: linear-gradient(160deg, rgb(10, 22, 40) 0%, rgb(13, 30, 64) 35%, rgb(14, 42, 90) 65%, rgb(9, 24, 48) 100%);
+  font-family: 'Nunito', sans-serif;
+  color: #fff;
+  padding: 1rem;
+}

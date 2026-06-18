@@ -1,0 +1,45 @@
+main{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+    column-gap: 1.5rem;
+    
+    margin-top: 2rem;
+}
+.weather-card{
+    border: 5px solid white;
+    min-height: 20rem;
+    background: linear-gradient(135deg, rgba(74, 144, 217, 0.22) 0%, rgba(10, 22, 40, 0.6) 100%);
+    border: 1px solid rgba(126, 184, 247, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    
+}
+
+.details-card{
+    border: 5px solid white;
+    min-height: 28rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(126, 184, 247, 0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    
+}
+
+.hourly-card{
+    border: 5px solid white;
+    min-height: 15rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(126, 184, 247, 0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+}
+
+.other-locations-card{
+    border: 5px solid white;
+    min-height: 17rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(126, 184, 247, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+}

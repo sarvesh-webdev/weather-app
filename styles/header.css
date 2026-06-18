@@ -1,0 +1,39 @@
+header{
+    display: flex;
+    justify-content: space-between;
+    min-height: 5rem;
+    border: 1px dotted white;
+    align-items: center;
+
+}
+
+.search-btn{
+    display: flex;
+    gap: 5px;
+}
+
+.search-btn .icon{
+    width: 1rem;
+    height: 1rem;
+}
+
+.search-btn{
+    font-size: 14px;
+    background: rgba(126, 184, 247, 0.1);
+    border: 1px solid rgba(126, 184, 247, 0.2);
+    border-radius: 12px;
+    padding: 10px 18px;
+    color: rgb(126, 184, 247);
+}
+.weather-txt{
+    font-size: 14px;
+    color: #8eafd4;
+    letter-spacing: 1px;
+}
+
+.dashboard-txt{
+    font-size: 20px;
+    color: #e8f0fe;
+    margin-top: 2px;
+    font-weight: 700;
+}
