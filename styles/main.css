@@ -1,9 +1,8 @@
 main{
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0,1fr);
     row-gap: 1.5rem;
     column-gap: 1.5rem;
-    
     margin-top: 2rem;
 }
 .weather-card{
@@ -140,19 +139,212 @@ main{
 
 /*hourly card section begins form here*/
 .hourly-card{
-    border: 5px solid white;
     min-height: 15rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(126, 184, 247, 0.12);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
+    padding: 1.5rem;
 }
+
+.hourly-card-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1.5rem;
+}
+
+.hourly-card-head-tab{
+    display: flex;
+    gap: 0.25rem;
+    background: rgba(126, 184, 247, 0.07);
+    border-radius: 12px;
+    padding: 4px;
+}
+
+.hourly-card-head-tab button{
+    padding: 7px 18px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    background: transparent;
+    color: rgb(142, 175, 212);
+    border: 1px solid transparent;
+    transition: transform 0.3s ease;
+}
+
+
+.hourly-card-head-tab .active-btn{
+    background: rgba(126, 184, 247, 0.2);
+    color: rgb(126, 184, 247);
+    border: 1px solid rgba(126, 184, 247, 0.25);
+}
+
+.more-btn{
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    line-height: 1.5;
+
+    color: rgb(126, 184, 247);
+    font-size: 13px;
+    cursor: pointer;
+    background: none;
+    border-width: medium;
+    border-style: none;
+    border-color: currentcolor;
+    border-image: initial;
+}
+
+.hourly-card-main{
+    display: flex;
+    gap: 0.75rem;
+    scrollbar-width: none;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+
+    
+}
+
+.hourly-card-main-element{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(126, 184, 247, 0.15);
+    border: 1px solid rgba(126, 184, 247, 0.3);
+    min-width: 70px;
+}
+
+.hourly-card-element-time{
+    color: rgb(142, 175, 212);
+    font-size: 12px;
+    font-weight: 600
+}
+
+.hourly-card-element-icon{
+ font-size: 22px;
+}
+
+.hourly-card-element-temperature{
+    color: rgb(232, 240, 254);
+    font-size: 14px;
+    font-weight: 700;
+}
+
 /*other locations card section begins from here*/
+
 .other-locations-card{
     border: 5px solid white;
-    min-height: 17rem;
+    min-height: 10rem;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(126, 184, 247, 0.1);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
+
+    padding: 1.5rem;
+}
+
+.other-locations-card p{
+    color: rgb(142, 175, 212);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.other-locations-card-main{
+display: grid;
+grid-template-columns: repeat(2 , minmax(0,1fr));
+gap: 0.75rem;
+}
+
+.other-locations-card-main-elements{
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(126, 184, 247, 0.07);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: left;
+}
+
+.other-locations-card-main-elements-active{
+    background: rgba(126, 184, 247, 0.15);
+    border: 1px solid rgba(126, 184, 247, 0.3);
+}
+
+.other-locations-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+
+}
+
+.other-locations-card-header span{
+    font-size: 18px;
+}
+
+.other-locations-card-header .country-code{
+    color: rgb(142, 175, 212);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.other-locations-card-country{
+    color: rgb(232, 240, 254);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.other-locations-card-temperature{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 0.5rem;
+
+}
+
+.other-locations-card-temperature .weather-description{
+    color: rgb(142, 175, 212);
+    font-size: 12px;
+}
+
+.other-locations-card-temperature .weather-temperature{
+    color: rgb(126, 184, 247);
+    font-size: 20px;
+    font-weight: 800;
+}
+/*for desktop size styles*/
+
+@media (min-width: 64rem){
+
+    main{
+        grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+    .weather-card{
+        grid-column: span 2;
+    }
+    
+    .hourly-card{
+        grid-column: span 3;
+    }
+
+    .other-locations-card{
+        grid-column: span 3;
+    }
+    .other-locations-card-main{
+        grid-template-columns: repeat(4,minmax(0,1fr));
+    }
 }

@@ -13,3 +13,12 @@ body {
   color: #fff;
   padding: 1rem;
 }
+
+@media (min-width:64rem){
+  body{
+   max-width: 64rem;
+    padding-block: 1rem;
+    padding-inline: 1rem;
+    margin-inline: auto;
+  }
+}
