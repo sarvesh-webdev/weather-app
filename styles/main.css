@@ -201,7 +201,7 @@ main{
 }
 
 .hourly-card-main{
-    display: flex;
+    display: flex;     /*will display only when is clicked on hourly btn , diplay:flex to display*/
     gap: 0.75rem;
     scrollbar-width: none;
     overflow-x: auto;
@@ -238,6 +238,104 @@ main{
     font-size: 14px;
     font-weight: 700;
 }
+
+/* 7 days section , which will display instead of hourly sectoin when clicked on 7 days btn*/
+
+.seven-days-main{
+    display: none;                 /*display: flex to display*/
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.seven-days-element{
+    background: transparent;
+    border: 1px solid transparent;
+    padding-block: 0.75rem;
+    padding-inline: 1rem;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.seven-days-element-active{
+    background: rgba(126, 184, 247, 0.08);
+    border: 1px solid rgba(126, 184, 247, 0.12);
+}
+.seven-days-sub-element-1{
+    width: 50px;
+    color: rgb(126, 184, 247);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.seven-days-sub-element-2{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.seven-days-sub-element-2 .icon{
+        font-size: 20px;
+}
+
+.seven-days-sub-element-2 .weather-txt{
+    color: rgb(142, 175, 212);
+    font-size: 13px;
+}
+@media (max-width:480px){
+    .seven-days-sub-element-2{
+        justify-content: center;
+    }
+    .seven-days-sub-element-2 .weather-txt{
+        display: none;
+    }
+}
+.temperature-bar-section{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.temperature-bar-section .min-temp{
+    color: rgb(142, 175, 212);
+    font-size: 13px;
+}
+
+.temperature-bar-section .max-temp{
+    color: rgb(232, 240, 254);
+    font-size: 13px;
+    font-weight: 700;
+    width: 30px;
+}
+
+.temperature-bar{
+    width: 80px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(126, 184, 247, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.temperature-bar-element{
+    position: absolute;
+    left: 30%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, rgb(126, 184, 247), rgb(74, 144, 217));
+    border-radius: 2px;
+}
+
+/* chart main will display when clicked on chart btn*/
+ .chart-main{
+  height: 180px;
+
+  display: none;
+
+ }
 
 /*other locations card section begins from here*/
 
