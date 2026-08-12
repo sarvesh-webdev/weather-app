@@ -1,8 +1,55 @@
-import { weatherCardData,detailsCardData } from "./data.js";
+import { weatherCardData,detailsCardData,hourlyCardData } from "./data.js";
 
 renderWeatherCard(weatherCardData);
 
 renderDetailsCard(detailsCardData);
+
+
+/*handling hourly-tan-btn  */
+const hourlyTabBtn = document.querySelectorAll('.js-hourly-tab-btn');
+
+const sections = document.querySelectorAll('.js-tab-sections');    //for switching tab when clicked on btn
+
+hourlyTabBtn.forEach((button)=>{
+button.addEventListener('click',()=>{
+     /*to remove from all btn the active class so that then can add active class to btn clicked*/
+
+    hourlyTabBtn.forEach((btn)=>{
+        btn.classList.remove('active-btn');   
+    });
+   //to remove from all section block so can then add block to the section of which btn was clicked
+    sections.forEach((s)=>{
+        s.classList.remove('active');
+    });
+     
+    // to display the tab whose btn is clicked
+    const targetId = button.dataset.target;
+
+    console.log(targetId);
+    console.log(document.getElementById(targetId));
+    document.getElementById(targetId).classList.add('active');
+
+
+    //to show the btn glow which is clicked
+    button.classList.add('active-btn');
+})
+});
+
+//to handle searche section display when clicked on search btn
+
+const searchBtn = document.querySelector('.js-search-btn');
+const searchSectionDisplay = document.querySelector('.js-search-section');
+
+searchBtn.addEventListener('click',()=>{
+
+searchSectionDisplay.classList.toggle('active');
+
+});
+
+//running other render functions
+
+renderHourlyCard(hourlyCardData);
+//functions
 
 function renderWeatherCard(data){
 
@@ -112,4 +159,21 @@ document.querySelector('.details-card').innerHTML = `  <p>DETAILS</p>
                 <div class="details-card-info-sub-section-2">${data.pressure.description}</div>
             </div>
         </div> `;
+}
+
+function renderHourlyCard(data){
+
+    let generatedHtml = '';
+
+    data.forEach((element)=>{
+      generatedHtml += `
+      <div class="hourly-card-main-element">
+                <span class="hourly-card-element-time">${element.time}</span>
+                <span class="hourly-card-element-icon">${element.img}</span>
+                <span class="hourly-card-element-temperature">${element.temperature}°</span>
+            </div>`;
+    });
+
+    document.querySelector('.js-hourly-card-main').innerHTML = generatedHtml ;
+
 }

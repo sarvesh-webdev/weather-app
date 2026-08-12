@@ -201,7 +201,8 @@ main{
 }
 
 .hourly-card-main{
-    display: flex;     /*will display only when is clicked on hourly btn , diplay:flex to display*/
+   /* display: flex; go at bottom js-tab-section class handles this
+     */   /*will display only when is clicked on hourly btn , diplay:flex to display*/
     gap: 0.75rem;
     scrollbar-width: none;
     overflow-x: auto;
@@ -242,7 +243,7 @@ main{
 /* 7 days section , which will display instead of hourly sectoin when clicked on 7 days btn*/
 
 .seven-days-main{
-    display: none;                 /*display: flex to display*/
+    /* display: none;  go at bottom other class handles this */              /*display: flex to display*/
     flex-direction: column;
     gap: 0.5rem;
 }
@@ -333,7 +334,7 @@ main{
  .chart-main{
   height: 180px;
 
-  display: none;
+  /* display: none; go at bottom other class handles this*/
 
  }
 
@@ -445,4 +446,14 @@ gap: 0.75rem;
     .other-locations-card-main{
         grid-template-columns: repeat(4,minmax(0,1fr));
     }
+}
+
+/*for js to display tab when clicked on btn*/
+
+.js-tab-sections{
+    display: none;
+}
+
+.js-tab-sections.active{
+    display: flex;
 }

@@ -23,6 +23,19 @@ header{
     border-radius: 12px;
     padding: 10px 18px;
     color: rgb(126, 184, 247);
+    transition: transform 0.15s ease, background 0.15s ease;
+
+}
+
+.search-btn:hover{
+    transform: scale(1.05);
+    background: rgba(134, 188, 245, 0.15);
+
+}
+
+.search-btn:active{
+    transform: scale(0.99);
+    background: rgba(134, 188, 245, 0.08);
 }
 .weather-txt{
     font-size: 14px;
@@ -47,6 +60,10 @@ header{
     border-radius: 1rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
+}
+
+.search-section.active{
+    display: block;
 }
 
 .search-box{
