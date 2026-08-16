@@ -1,4 +1,4 @@
-import { weatherCardData,detailsCardData,hourlyCardData } from "./data.js";
+import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData } from "./data.js";
 
 renderWeatherCard(weatherCardData);
 
@@ -49,6 +49,24 @@ searchSectionDisplay.classList.toggle('active');
 //running other render functions
 
 renderHourlyCard(hourlyCardData);
+renderSevenDaysCard(sevenDaysData);
+
+//handling glow effect of other location card
+
+const otherLocationBtn = document.querySelectorAll('.other-locations-card-main-elements');
+
+otherLocationBtn.forEach((button)=>{
+
+    button.addEventListener('click',()=>{
+      otherLocationBtn.forEach((element)=>{
+        element.classList.remove('active');
+      });
+      
+      button.classList.add('active');
+    });
+
+});
+
 //functions
 
 function renderWeatherCard(data){
@@ -176,4 +194,49 @@ function renderHourlyCard(data){
 
     document.querySelector('.js-hourly-card-main').innerHTML = generatedHtml ;
 
+}
+
+function renderSevenDaysCard(data){
+
+    const globalMaxTemp = Math.max(...data.map( element=> element.maxTemp)) ; 
+    // map make new array of whatever return here returning maxTemp thus making new array of max temp , ... is spread operator which spread the array
+    const globalMinTemp = Math.min(...data.map(element => element.minTemp));
+
+    const range = globalMaxTemp - globalMinTemp ;
+    
+    const html = data.map((day)=>{
+     
+    const left = ((day.minTemp - globalMinTemp)/range)*100 ;
+    const width = ((day.maxTemp - day.minTemp)/range)*100 ;
+
+    return `
+    <div class="seven-days-element js-seven-days-element" data-today = "${day.day}">
+                    <div class="seven-days-sub-element-1">${day.day}</div>
+                    <div class="seven-days-sub-element-2">
+                        <span class="icon">${day.img}</span>
+                        <span class="weather-txt">${day.detail}</span>
+                    </div>
+                    <div class="temperature-bar-section">
+                        <span class="min-temp">${day.minTemp}°</span>
+                        <div class="temperature-bar">
+                            <div class="temperature-bar-element" style = "left:${left}%;width:${width}%"></div>
+                        </div>
+                        <span class="max-temp">${day.maxTemp}°</span>
+                </div>
+                </div>
+    `;
+    }).join("");
+
+    document.querySelector('.js-seven-days-main').innerHTML = html ;
+
+    //to handle glow of element so that todays day glow 
+
+    const today = 'Tue';
+    document.querySelectorAll('.js-seven-days-element').forEach((element)=>{
+     if(element.dataset.today === today){
+        element.classList.add('active');
+     }else{
+        element.classList.remove('active');
+     }
+    });
 }

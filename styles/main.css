@@ -260,7 +260,7 @@ main{
     justify-content: space-between;
 }
 
-.seven-days-element-active{
+.seven-days-element.active{
     background: rgba(126, 184, 247, 0.08);
     border: 1px solid rgba(126, 184, 247, 0.12);
 }
@@ -323,8 +323,6 @@ main{
 
 .temperature-bar-element{
     position: absolute;
-    left: 30%;
-    width: 50%;
     height: 100%;
     background: linear-gradient(90deg, rgb(126, 184, 247), rgb(74, 144, 217));
     border-radius: 2px;
@@ -378,7 +376,7 @@ gap: 0.75rem;
     text-align: left;
 }
 
-.other-locations-card-main-elements-active{
+.other-locations-card-main-elements.active{
     background: rgba(126, 184, 247, 0.15);
     border: 1px solid rgba(126, 184, 247, 0.3);
 }

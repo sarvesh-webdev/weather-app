@@ -88,3 +88,66 @@ export const hourlyCardData = [
         temperature:14
     }
 ];
+
+export const sevenDaysData = [
+    {
+        day: 'Mon',
+        img: '☀️',
+        detail: 'Sunny',
+        maxTemp: 25,
+        minTemp: 14
+    },
+    {
+        day: 'Tue',
+        img: '🌤',
+        detail: 'Partly Cloudy',
+        maxTemp: 28,
+        minTemp: 13
+    },
+    {
+        day: 'Wed',
+        img: '🌧',
+        detail: 'Rain',
+        maxTemp: 21,
+        minTemp: 14
+    },
+    {
+        day: 'Thu',
+        img: '⛈',
+        detail: 'Thunderstorm',
+        maxTemp: 30,
+        minTemp: 21
+    },
+    {
+        day: 'Fri',
+        img: '🌦',
+        detail: 'Showers',
+        maxTemp: 22,
+        minTemp: 11
+    },
+    {
+        day: 'Sat',
+        img: '⛅',
+        detail: 'Cloudy',
+        maxTemp: 35,
+        minTemp: 14
+    },
+    {
+        day: 'Sun',
+        img: '☀️',
+        detail: 'Sunny',
+        maxTemp: 25,
+        minTemp: 14
+    },
+   
+]
+
+export const chartHourlyData = [
+  { time: "6AM", temp: 12 },
+  { time: "9AM", temp: 15 },
+  { time: "12PM", temp: 18 },
+  { time: "3PM", temp: 20 },
+  { time: "6PM", temp: 17 },
+  { time: "9PM", temp: 14 },
+  { time: "12AM", temp: 12 }
+];
