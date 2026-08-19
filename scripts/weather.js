@@ -1,4 +1,4 @@
-import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData } from "./data.js";
+import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData,otherLocationData } from "./data.js";
 
 renderWeatherCard(weatherCardData);
 
@@ -50,6 +50,7 @@ searchSectionDisplay.classList.toggle('active');
 
 renderHourlyCard(hourlyCardData);
 renderSevenDaysCard(sevenDaysData);
+renderOtherLocationCard(otherLocationData);
 
 //handling glow effect of other location card
 
@@ -66,6 +67,40 @@ otherLocationBtn.forEach((button)=>{
     });
 
 });
+
+//handling chart
+
+const ctx = document.getElementById("tempChart").getContext("2d");
+new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: chartHourlyData.map(d => d.time),
+    datasets: [{
+      label: "Temperature",
+      data: chartHourlyData.map(d => d.temp),
+      borderColor: "#7eb8f7",
+      backgroundColor: "rgba(126,184,247,0.3)",
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: "#7eb8f7",
+      pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: { ticks: { color: "#8eafd4" } },
+      x: { ticks: { color: "#8eafd4" } }
+    },
+    plugins: {
+    legend: {
+      display: false
+    }
+  }
+  }
+});
+
 
 //functions
 
@@ -239,4 +274,36 @@ function renderSevenDaysCard(data){
         element.classList.remove('active');
      }
     });
+}
+
+function renderOtherLocationCard(data){
+const html = data.map((el)=>{
+return `  <button class="other-locations-card-main-elements js-other-locations-card-main-elements" data-current-city = "${el.city}">
+                <div class="other-locations-card-header">
+                    <span class="country-code">${el.countryCode}</span>
+                    <span>🌍</span>
+                </div>
+                <div class="other-locations-card-country">
+                    ${el.city}
+                </div>
+                <div class="other-locations-card-temperature">
+                    <span class="weather-description">${el.detail}</span>
+                    <span class="weather-temperature">${el.temperature}°</span>
+                </div>
+            </button>`;
+}).join("");
+
+document.querySelector('.js-other-locations-card-main').innerHTML = html ;
+
+//handling glow
+const currentCity = 'New York';
+
+document.querySelectorAll('.js-other-locations-card-main-elements').forEach((btn)=>{
+if(btn.dataset.currentCity === currentCity){
+    btn.classList.add('active');
+}else{
+    btn.classList.remove('active');
+}
+});
+
 }

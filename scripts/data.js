@@ -148,6 +148,34 @@ export const chartHourlyData = [
   { time: "12PM", temp: 18 },
   { time: "3PM", temp: 20 },
   { time: "6PM", temp: 17 },
-  { time: "9PM", temp: 14 },
+  { time: "9PM", temp: 20 },
   { time: "12AM", temp: 12 }
+];
+
+
+export const otherLocationData = [
+    {
+        countryCode:'US',
+        city: 'New York',
+        detail: 'Cloudy',
+        temperature : 18
+    },
+    {
+        countryCode:'GB',
+        city: 'London',
+        detail: 'Rainy',
+        temperature : 12
+    },
+    {
+        countryCode:'JP',
+        city: 'Tokyo',
+        detail: 'Sunny',
+        temperature : 26
+    },
+    {
+        countryCode:'AU',
+        city: 'Sydney',
+        detail: 'Clear',
+        temperature :24
+    },
 ];
