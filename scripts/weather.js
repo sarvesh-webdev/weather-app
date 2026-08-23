@@ -1,10 +1,19 @@
 import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData,otherLocationData } from "./data.js";
+import { fetchCurrentWeather,loadWeather,fetchHourlyData } from "./api.js";
 
-renderWeatherCard(weatherCardData);
+init();
 
-renderDetailsCard(detailsCardData);
+async function init(){
+    const city = 'New York' ;
+    await loadWeather(city);
 
+    renderWeatherCard(weatherCardData);
 
+    renderDetailsCard(detailsCardData); 
+}
+
+console.log(await fetchCurrentWeather('New York'));
+console.log(await fetchHourlyData('New York'));
 /*handling hourly-tan-btn  */
 const hourlyTabBtn = document.querySelectorAll('.js-hourly-tab-btn');
 
@@ -120,7 +129,8 @@ function renderWeatherCard(data){
               <div class="weather-card-temperature">${data.temperature}°</div>
               <div class="weather-card-weather-info">${data.description} </div>
             </div>
-         <div class="weather-card-icon">${data.img}</div>
+         <div class="weather-card-icon">${data.img}
+           </div>
         
         </div>
         
@@ -170,7 +180,7 @@ document.querySelector('.details-card').innerHTML = `  <p>DETAILS</p>
 
             <div class="details-card-info-section">
                 <div class="details-card-info-sub-section-1">${data.humidity.value}</div>
-                <div class="details-card-info-sub-section-2">${data.humidity.value}</div>
+                <div class="details-card-info-sub-section-2">${data.humidity.description}</div>
             </div>
         </div>
         <div class="details-card-section">

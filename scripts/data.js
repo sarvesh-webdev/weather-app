@@ -1,16 +1,43 @@
 
 export const weatherCardData ={
-location: 'New York, US',
+location: '',
+temperature: 0 ,
+description :'',
+highestTemperature: 0,
+lowestTemperature : 0 ,
+feelsLike: 0 ,
+img:''
+
+/* location: 'New York, US',
 temperature: 18 ,
 description :'Cloudy',
 highestTemperature: 24,
 lowestTemperature : 14 ,
 feelsLike: 16 ,
-img:'⛅'
+img:'⛅' */
 };
 
 export const detailsCardData = {
-wind:{
+  wind:{
+    value:'',
+    description: ''
+},
+humidity:{
+    value:'',
+    description: ''},
+visibility:{
+    value:'',
+    description: ''
+},
+uvIndex:{
+    value: 0,
+    description: ''
+},
+pressure:{
+    value:'',
+    description: ''
+}   
+/* wind:{
     value:'14 km/h',
     description: 'SW'
 },
@@ -28,7 +55,7 @@ uvIndex:{
 pressure:{
     value:'1013 mb',
     description: 'Normal'
-}
+} */
 };
 
 export const hourlyCardData = [

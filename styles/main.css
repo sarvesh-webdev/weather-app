@@ -45,11 +45,20 @@ main{
     margin-top: 8px;
 }
 
-.weather-card-icon{
+ .weather-card-icon{
     font-size: 72px;
     line-height: 1;
-    margin-bottom: 8px;
-}
+    margin-bottom: 18px;
+} 
+
+/* .weather-icon {
+  filter: brightness(1.8);
+} */
+
+
+
+
+
 
 .weather-card-last-section{
     display: flex;
