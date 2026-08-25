@@ -1,5 +1,5 @@
 
-import { weatherCardData, detailsCardData } from "./data.js";
+import { weatherCardData, detailsCardData,hourlyCardData,chartHourlyData } from "./data.js";
 
 
 const API_KEY = '75d42b5e0c9e35c3abf396ce24512398';
@@ -18,7 +18,7 @@ export async function fetchHourlyData(city) {
 export async function loadWeather(city) {
     const current = await fetchCurrentWeather(city);
     
-    const hour = new Date((current.dt + current.timezone)* 1000).getHours();  //to give milisecond to date
+    const hour = new Date((current.dt + current.timezone)* 1000).getUTCHours();  //to give milisecond to date
     const uvIndex = estimateUV(current.clouds.all , hour);
     weatherCardData.location = `${current.name}, ${current.sys.country}` ;
     weatherCardData.temperature = Math.round(current.main.temp);
@@ -42,7 +42,30 @@ export async function loadWeather(city) {
 }
 
       
+export async function loadHourlyData(city){
+  const hourlyForecast = await fetchHourlyData(city);
 
+  const offset = hourlyForecast.city.timezone ;
+
+  const next24HoursData = hourlyForecast.list.slice(0,24);
+
+  const chartData = hourlyForecast.list.slice(0,8);
+
+  next24HoursData.forEach((element)=>{
+    hourlyCardData.push({
+        time: formatHour(element.dt,offset),
+        img: getWeatherEmoji(element.weather?.[0]?.icon) ,
+        temperature:Math.round(element.main.temp)
+    });
+  });
+  
+   //loading chart data 
+  chartData.forEach((element)=>{
+    chartHourlyData.push(
+       { time: formatHour(element.dt,offset) ,
+         temp: Math.round(element.main.temp) });
+  });
+}
 
 
 function getHumidityDescription(value) {
@@ -122,3 +145,20 @@ function getWeatherEmoji(iconCode) {
 }
 
 
+function formatHour(dt, offset) {
+  // Convert to city-local timestamp
+  const ms = (dt + offset) * 1000;
+  const date = new Date(ms);
+
+  // Use UTC getters because we already applied offset
+  let hours = date.getUTCHours();
+
+  // AM/PM conversion
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12; // 0 → 12, 13 → 1, etc.
+
+  // Pad minutes
+ 
+
+  return `${hours} ${ampm}`;
+}

@@ -1,15 +1,20 @@
 import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData,otherLocationData } from "./data.js";
-import { fetchCurrentWeather,loadWeather,fetchHourlyData } from "./api.js";
+import { fetchCurrentWeather,loadWeather,fetchHourlyData,loadHourlyData } from "./api.js";
 
 init();
 
 async function init(){
     const city = 'New York' ;
     await loadWeather(city);
+    await loadHourlyData(city);
 
     renderWeatherCard(weatherCardData);
 
     renderDetailsCard(detailsCardData); 
+
+    renderHourlyCard(hourlyCardData);
+
+    renderChart(chartHourlyData);
 }
 
 console.log(await fetchCurrentWeather('New York'));
@@ -33,9 +38,6 @@ button.addEventListener('click',()=>{
      
     // to display the tab whose btn is clicked
     const targetId = button.dataset.target;
-
-    console.log(targetId);
-    console.log(document.getElementById(targetId));
     document.getElementById(targetId).classList.add('active');
 
 
@@ -57,7 +59,7 @@ searchSectionDisplay.classList.toggle('active');
 
 //running other render functions
 
-renderHourlyCard(hourlyCardData);
+
 renderSevenDaysCard(sevenDaysData);
 renderOtherLocationCard(otherLocationData);
 
@@ -79,36 +81,39 @@ otherLocationBtn.forEach((button)=>{
 
 //handling chart
 
-const ctx = document.getElementById("tempChart").getContext("2d");
-new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: chartHourlyData.map(d => d.time),
-    datasets: [{
-      label: "Temperature",
-      data: chartHourlyData.map(d => d.temp),
-      borderColor: "#7eb8f7",
-      backgroundColor: "rgba(126,184,247,0.3)",
-      fill: true,
-      tension: 0.4,
-      pointBackgroundColor: "#7eb8f7",
-      pointRadius: 4
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: { ticks: { color: "#8eafd4" } },
-      x: { ticks: { color: "#8eafd4" } }
+function renderChart(chartHourlyData){
+    const ctx = document.getElementById("tempChart").getContext("2d");
+    new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: chartHourlyData.map(d => d.time),
+        datasets: [{
+        label: "Temperature",
+        data: chartHourlyData.map(d => d.temp),
+        borderColor: "#7eb8f7",
+        backgroundColor: "rgba(126,184,247,0.3)",
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: "#7eb8f7",
+        pointRadius: 4
+        }]
     },
-    plugins: {
-    legend: {
-      display: false
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+        y: { ticks: { color: "#8eafd4" } },
+        x: { ticks: { color: "#8eafd4" } }
+        },
+        plugins: {
+        legend: {
+        display: false
+        }
     }
-  }
-  }
-});
+    }
+    });
+}
+
 
 
 //functions

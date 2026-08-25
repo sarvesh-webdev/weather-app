@@ -59,7 +59,8 @@ pressure:{
 };
 
 export const hourlyCardData = [
-    {
+  
+    /* {
         time:'Now',
         img: '⛅',
         temperature:18
@@ -113,7 +114,7 @@ export const hourlyCardData = [
         time:'10PM',
         img:'🌑',
         temperature:14
-    }
+    } */
 ];
 
 export const sevenDaysData = [
@@ -170,13 +171,14 @@ export const sevenDaysData = [
 ]
 
 export const chartHourlyData = [
-  { time: "6AM", temp: 12 },
+    
+/*   { time: "6AM", temp: 12 },
   { time: "9AM", temp: 15 },
   { time: "12PM", temp: 18 },
   { time: "3PM", temp: 20 },
   { time: "6PM", temp: 17 },
   { time: "9PM", temp: 20 },
-  { time: "12AM", temp: 12 }
+  { time: "12AM", temp: 12 } */
 ];
 
 
