@@ -1,5 +1,5 @@
-import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData,otherLocationData } from "./data.js";
-import { fetchCurrentWeather,loadWeather,fetchHourlyData,loadHourlyData } from "./api.js";
+import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData,otherLocationData,otherLocationCities } from "./data.js";
+import { loadWeather,loadHourlyData,loadOtherLocationData } from "./api.js";
 
 init();
 
@@ -8,17 +8,21 @@ async function init(){
     await loadWeather(city);
     await loadHourlyData(city);
 
+    await loadOtherLocationData(otherLocationCities);
+
     renderWeatherCard(weatherCardData);
 
     renderDetailsCard(detailsCardData); 
 
     renderHourlyCard(hourlyCardData);
 
+    renderSevenDaysCard(sevenDaysData);
+
     renderChart(chartHourlyData);
+
+    renderOtherLocationCard(otherLocationData);
 }
 
-console.log(await fetchCurrentWeather('New York'));
-console.log(await fetchHourlyData('New York'));
 /*handling hourly-tan-btn  */
 const hourlyTabBtn = document.querySelectorAll('.js-hourly-tab-btn');
 
@@ -60,8 +64,8 @@ searchSectionDisplay.classList.toggle('active');
 //running other render functions
 
 
-renderSevenDaysCard(sevenDaysData);
-renderOtherLocationCard(otherLocationData);
+
+
 
 //handling glow effect of other location card
 
@@ -281,14 +285,16 @@ function renderSevenDaysCard(data){
 
     //to handle glow of element so that todays day glow 
 
-    const today = 'Tue';
+     const array = document.querySelectorAll('.js-seven-days-element');
+     array[0]?.classList.add('active');
+    /*  const today = 'Tue';
     document.querySelectorAll('.js-seven-days-element').forEach((element)=>{
      if(element.dataset.today === today){
         element.classList.add('active');
      }else{
         element.classList.remove('active');
      }
-    });
+    }); */
 }
 
 function renderOtherLocationCard(data){
@@ -321,4 +327,8 @@ if(btn.dataset.currentCity === currentCity){
 }
 });
 
+}
+
+function fetchCityName(){
+    
 }

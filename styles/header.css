@@ -140,3 +140,26 @@ header{
     font-weight: 700;
     color: rgb(126, 184, 247);
 }
+
+.search-box button {
+  background: none;       
+  border: none;           
+  padding: 3px;            
+  cursor: pointer;        
+  display: flex;        
+  align-items: center;
+  justify-content: center;
+  
+}
+.search-box button svg{
+    transition: all 0.2s ease;
+}
+
+.search-box button:hover svg {
+    border-radius: 50%;
+    filter: drop-shadow(0 0 5px #7eb8f7)brightness(1.6);
+}
+
+.search-box button:active svg {
+  filter: drop-shadow(0 0 8px #4a90e2);
+}

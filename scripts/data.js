@@ -118,7 +118,7 @@ export const hourlyCardData = [
 ];
 
 export const sevenDaysData = [
-    {
+   /*  {
         day: 'Mon',
         img: '☀️',
         detail: 'Sunny',
@@ -166,7 +166,7 @@ export const sevenDaysData = [
         detail: 'Sunny',
         maxTemp: 25,
         minTemp: 14
-    },
+    }, */
    
 ]
 
@@ -181,9 +181,10 @@ export const chartHourlyData = [
   { time: "12AM", temp: 12 } */
 ];
 
+export const otherLocationCities = ['New york','London','Tokyo','Sydney'];
 
 export const otherLocationData = [
-    {
+   /*  {
         countryCode:'US',
         city: 'New York',
         detail: 'Cloudy',
@@ -206,5 +207,5 @@ export const otherLocationData = [
         city: 'Sydney',
         detail: 'Clear',
         temperature :24
-    },
+    }, */
 ];

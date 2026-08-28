@@ -1,5 +1,5 @@
 
-import { weatherCardData, detailsCardData,hourlyCardData,chartHourlyData } from "./data.js";
+import { weatherCardData, detailsCardData,hourlyCardData,chartHourlyData,sevenDaysData,otherLocationData } from "./data.js";
 
 
 const API_KEY = '75d42b5e0c9e35c3abf396ce24512398';
@@ -13,6 +13,15 @@ export async function fetchCurrentWeather(city){
 export async function fetchHourlyData(city) {
     const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`);
     return await res.json();
+}
+
+export async function fetchOtherLocationData(cities){
+  const responses = await Promise.all(cities.map((city)=>{
+   return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
+  }));
+
+  return await Promise.all(responses.map((res)=>{return res.json();}));
+
 }
 
 export async function loadWeather(city) {
@@ -50,6 +59,9 @@ export async function loadHourlyData(city){
   const next24HoursData = hourlyForecast.list.slice(0,24);
 
   const chartData = hourlyForecast.list.slice(0,8);
+  //emptying before pushing
+  hourlyCardData.length = 0;
+  chartHourlyData.length = 0;
 
   next24HoursData.forEach((element)=>{
     hourlyCardData.push({
@@ -65,8 +77,68 @@ export async function loadHourlyData(city){
        { time: formatHour(element.dt,offset) ,
          temp: Math.round(element.main.temp) });
   });
+
+  //loading seven days data
+  const daysMap = {};
+  const today = hourlyForecast.list?.[0]?.dt;
+  const todayDay = getDay(today,offset);
+
+  hourlyForecast.list.forEach((element)=>{
+
+      const day = getDay(element.dt,offset);
+
+      if(!daysMap[day]){
+        daysMap[day] = {day,temp:[],details:[],icon:[]}
+      }
+      
+      daysMap[day].temp.push(element.main.temp);
+      daysMap[day].details.push(element.weather?.[0]?.description);
+      daysMap[day].icon.push(element.weather?.[0]?.icon);
+
+  });
+
+   const rotatedOrder = getRotatedOrder(todayDay);
+
+   const dayArray = Object.values(daysMap);
+
+   // need to sort this array in order starting from today
+   const orderedDayArray = dayArray.sort((a,b)=> rotatedOrder.indexOf(a.day) - rotatedOrder.indexOf(b.day));
+   console.log(orderedDayArray);
+
+   sevenDaysData.length = 0;
+
+   orderedDayArray.forEach((element)=>{
+
+    sevenDaysData.push({
+        day: element.day,
+        img: getWeatherEmoji(getMostFrequent(element.icon)),
+        detail: getMostFrequent(element.details),
+        maxTemp: Math.round(Math.max(...element.temp)) ,
+        minTemp: Math.round(Math.min(...element.temp))
+    });
+    });
+   
+
+   
 }
 
+export async function loadOtherLocationData(cities) {
+
+  const responses = await fetchOtherLocationData(cities);
+  
+  otherLocationData.length = 0;
+
+  responses.forEach((res)=>{
+
+    otherLocationData.push({
+        countryCode: res.sys.country ,
+        city: res.name,
+        detail: res.weather?.[0]?.main,
+        temperature : Math.round(res.main.temp)
+    });
+  })
+  
+}
 
 function getHumidityDescription(value) {
   if (value < 30) return "Very Dry";
@@ -161,4 +233,45 @@ function formatHour(dt, offset) {
  
 
   return `${hours} ${ampm}`;
+}
+
+function getDay(dt,offset){
+  const ms = (dt + offset) * 1000;
+  const date = new Date(ms);
+
+  const weekdayIndex = date.getUTCDay(); 
+  const weekdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const day = weekdays[weekdayIndex];
+
+  return day;
+}
+
+function getRotatedOrder(todayDay){
+  //to get order so can sort the object into array but with today as first element in array 
+  //will need to rotate weekdays to match 
+
+   const weekdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+   const todayIndex = weekdays.indexOf(todayDay);
+   const rotatedOrder = weekdays.slice(todayIndex).concat(weekdays.slice(0,todayIndex));
+
+   return rotatedOrder;
+}
+
+function getMostFrequent(arr){
+  const frequency = {};
+  arr.forEach((element)=>{
+      frequency[element] = frequency[element] || 0;
+      frequency[element]++;
+  });
+  let maxCount = 0;
+  let mostFrequent = null;
+
+  for(const item in frequency){
+    if(frequency[item] > maxCount){
+       maxCount =  frequency[item];
+       mostFrequent = item;
+     }
+  }
+
+  return mostFrequent;
 }
