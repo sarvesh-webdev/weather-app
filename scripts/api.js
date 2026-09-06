@@ -102,8 +102,7 @@ export async function loadHourlyData(city){
    const dayArray = Object.values(daysMap);
 
    // need to sort this array in order starting from today
-   const orderedDayArray = dayArray.sort((a,b)=> rotatedOrder.indexOf(a.day) - rotatedOrder.indexOf(b.day));
-   console.log(orderedDayArray);
+    const orderedDayArray = dayArray.sort((a,b)=> rotatedOrder.indexOf(a.day) - rotatedOrder.indexOf(b.day));
 
    sevenDaysData.length = 0;
 

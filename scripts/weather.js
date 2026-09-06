@@ -1,14 +1,21 @@
 import { weatherCardData,detailsCardData,hourlyCardData,sevenDaysData,chartHourlyData,otherLocationData,otherLocationCities } from "./data.js";
 import { loadWeather,loadHourlyData,loadOtherLocationData } from "./api.js";
 
+let searchedCity = null
 init();
+fetchCityName();
+
 
 async function init(){
-    const city = 'New York' ;
+    const city = searchedCity || localStorage.getItem('cityName') || 'New York' ;
+    try{
+    
     await loadWeather(city);
     await loadHourlyData(city);
 
     await loadOtherLocationData(otherLocationCities);
+
+    localStorage.setItem('cityName',city);
 
     renderWeatherCard(weatherCardData);
 
@@ -20,7 +27,23 @@ async function init(){
 
     renderChart(chartHourlyData);
 
-    renderOtherLocationCard(otherLocationData);
+    renderOtherLocationCard(otherLocationData,city);
+
+    renderSearchSuggestion(otherLocationData);
+
+    }catch(error){
+     console.error("Init failed:", error);
+
+    // ❌ Do not overwrite localStorage
+    // Instead, revert to last valid city
+    const fallbackCity = localStorage.getItem('cityName') || 'New York';
+
+    // showPopup(`City not found. Reverting to ${fallbackCity}.`);
+
+    searchedCity = fallbackCity;
+     await init();  // retry with fallback
+    }
+    
 }
 
 /*handling hourly-tan-btn  */
@@ -67,27 +90,19 @@ searchSectionDisplay.classList.toggle('active');
 
 
 
-//handling glow effect of other location card
 
-const otherLocationBtn = document.querySelectorAll('.other-locations-card-main-elements');
-
-otherLocationBtn.forEach((button)=>{
-
-    button.addEventListener('click',()=>{
-      otherLocationBtn.forEach((element)=>{
-        element.classList.remove('active');
-      });
-      
-      button.classList.add('active');
-    });
-
-});
 
 //handling chart
 
+let chartInstanceObject;
+
 function renderChart(chartHourlyData){
-    const ctx = document.getElementById("tempChart").getContext("2d");
-    new Chart(ctx, {
+   const ctx = document.getElementById("tempChart").getContext("2d");
+
+   if(chartInstanceObject){
+    chartInstanceObject.destroy();
+   }
+    chartInstanceObject = new Chart(ctx, {
     type: "line",
     data: {
         labels: chartHourlyData.map(d => d.time),
@@ -297,7 +312,7 @@ function renderSevenDaysCard(data){
     }); */
 }
 
-function renderOtherLocationCard(data){
+function renderOtherLocationCard(data,city){
 const html = data.map((el)=>{
 return `  <button class="other-locations-card-main-elements js-other-locations-card-main-elements" data-current-city = "${el.city}">
                 <div class="other-locations-card-header">
@@ -317,18 +332,82 @@ return `  <button class="other-locations-card-main-elements js-other-locations-c
 document.querySelector('.js-other-locations-card-main').innerHTML = html ;
 
 //handling glow
-const currentCity = 'New York';
+const currentCity = city;
 
 document.querySelectorAll('.js-other-locations-card-main-elements').forEach((btn)=>{
-if(btn.dataset.currentCity === currentCity){
+if(btn.dataset.currentCity.toLowerCase() === currentCity.toLowerCase()){
     btn.classList.add('active');
 }else{
     btn.classList.remove('active');
 }
 });
 
+//handling glow effect of other location card and also making it interactive
+
+const otherLocationBtn = document.querySelectorAll('.other-locations-card-main-elements');
+
+otherLocationBtn.forEach((button)=>{
+
+    button.addEventListener('click',()=>{
+
+      otherLocationBtn.forEach((element)=>{
+        element.classList.remove('active');
+      });
+      
+      button.classList.add('active');
+
+      searchedCity = button.dataset.currentCity;
+      init();
+    });
+
+});
+
 }
 
-function fetchCityName(){
-    
+function renderSearchSuggestion(data){
+    const html = data.map((el)=>{
+        return `<button class="search-suggestion-btn" data-city ="${el.city}">
+            <div class="search-suggestion-btn-left-section">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(126, 184, 247);"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="city-name">${el.city}</span>
+                <span class="country-code">${el.countryCode}</span>
+            </div>
+            <div class="search-suggestion-btn-right-section">${el.temperature}°C</div>
+        </button>`;
+    }).join("");
+
+    document.querySelector(".search-suggestion").innerHTML = html;
+
+    const buttons = document.querySelectorAll(".search-suggestion-btn");
+
+    buttons.forEach((btn)=>{
+     btn.addEventListener('click',()=>{
+        searchedCity = btn.dataset.city;
+        init();
+        searchBtn.click();
+     })
+    });
 }
+function fetchCityName(){
+    const enterBtn =  document.querySelector('.js-search-enter-btn');
+    const searchBox = document.querySelector('.js-search-box');
+
+    enterBtn.addEventListener('click',()=>{
+        handleSearch(searchBox);
+    })
+
+    searchBox.addEventListener('keydown', (event) => {
+    if (event.key === "Enter") {
+      handleSearch(searchBox);
+    }
+});
+
+}
+
+ function handleSearch(searchBox) {
+    searchedCity = searchBox.value.trim() ;
+   
+
+    init();          // refresh with the new city
+    searchBtn.click(); // hide the search section
+  }
